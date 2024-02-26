@@ -1,6 +1,6 @@
 import './sources.css';
 
-interface Source {
+export interface Source {
     id: string;
     name: string;
     description: string;
@@ -10,7 +10,7 @@ interface Source {
     country: string;
 }
 
-type SourcesArray = Array<Source>;
+export type SourcesArray = Array<Source>;
 
 class Sources {
     draw(data: SourcesArray): void {
