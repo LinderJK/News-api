@@ -1,6 +1,6 @@
 import './news.css';
 
-interface Article {
+export interface Article {
     source: {
         id: string;
         name: string;
@@ -14,10 +14,10 @@ interface Article {
     content: string;
 }
 
-type ResponseObject = Array<Article>;
+export type ArticlesArray = Array<Article>;
 
 class News {
-    draw(data: ResponseObject): void {
+    draw(data: ArticlesArray): void {
         const news: Article[] = data.length >= 10 ? data.filter((_item, idx) => idx < 10) : data;
 
         const fragment: DocumentFragment = document.createDocumentFragment();
