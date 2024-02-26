@@ -14,9 +14,10 @@ interface Article {
     content: string;
 }
 
+type ResponseObject = Array<Article>;
+
 class News {
-    draw(data: Article[]): void {
-        console.log(data);
+    draw(data: ResponseObject): void {
         const news: Article[] = data.length >= 10 ? data.filter((_item, idx) => idx < 10) : data;
 
         const fragment: DocumentFragment = document.createDocumentFragment();
