@@ -14,16 +14,10 @@ interface Article {
     content: string;
 }
 
-interface ResponseObject {
-    status: string;
-    totalResults: number;
-    articles: Article[];
-}
-
 class News {
-    draw(data: ResponseObject): void {
-        const news: Article[] =
-            data.articles.length >= 10 ? data.articles.filter((_item, idx) => idx < 10) : data.articles;
+    draw(data: Article[]): void {
+        console.log(data);
+        const news: Article[] = data.length >= 10 ? data.filter((_item, idx) => idx < 10) : data;
 
         const fragment: DocumentFragment = document.createDocumentFragment();
         const newsItemTemp: HTMLTemplateElement | null = document.querySelector('#newsItemTemp');
