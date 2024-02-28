@@ -17,7 +17,14 @@ const baseConfig = {
             { test: /\.ts$/i, use: 'ts-loader' },
             {
                 test: /\.svg$/,
-                type: 'asset/inline',
+                type: 'asset/resource',
+                generator: {
+                    filename: 'assets/[name][ext]',
+                },
+            },
+            {
+                test: /\.html$/i,
+                loader: 'html-loader',
             },
         ],
     },
@@ -25,8 +32,8 @@ const baseConfig = {
         extensions: ['.ts', '.js'],
     },
     output: {
-        filename: 'index.js',
         path: path.resolve(__dirname, './dist'),
+        filename: 'index.js',
         assetModuleFilename: 'assets/[name][ext]',
     },
     plugins: [
