@@ -2,7 +2,7 @@ import { ArticlesArray } from '../view/news/news';
 import { SourcesArray } from '../view/sources/sources';
 import FilterNews from '../filter/filter';
 
-interface Options {
+interface OptionsObj {
     [key: string]: string;
 }
 
@@ -26,24 +26,38 @@ enum HttpMethod {
     DELETE = 'DELETE',
 }
 
-interface GetResponse {
+interface Request {
     endpoint: string;
-    options?: Options;
+    options?: OptionsObj;
+}
+
+interface LoaderInterface {
+    getResp(request: Request, callback?: CallbackFunction): void;
+
+    errorHandler(res: Response): Response;
+
+    makeUrl(options: OptionsObj, endpoint: string): string;
+
+    load(method: HttpMethod, endpoint: string, callback: CallbackFunction, options: OptionsObj): void;
+
+    getSources?(callback: CallbackFunction): void;
+
+    getNews?(e: Event, callback: CallbackFunction): void;
 }
 
 export type CallbackFunction = (data: ResponseData) => void;
 
-class Loader {
+class Loader implements LoaderInterface {
     private baseLink: string;
-    private options: Options;
+    private options: OptionsObj;
 
-    constructor(baseLink: string, options: Options) {
+    constructor(baseLink: string, options: OptionsObj) {
         this.baseLink = baseLink;
         this.options = options;
     }
 
     getResp(
-        { endpoint, options = {} }: GetResponse,
+        { endpoint, options = {} }: Request,
         callback: CallbackFunction = (): void => {
             console.error('No callback for GET response');
         }
@@ -61,8 +75,8 @@ class Loader {
         return res;
     }
 
-    makeUrl(options: Options, endpoint: string): string {
-        const urlOptions = { ...this.options, ...options };
+    makeUrl(options: OptionsObj, endpoint: string): string {
+        const urlOptions: OptionsObj = { ...this.options, ...options };
         let url = `${this.baseLink}${endpoint}?`;
 
         Object.keys(urlOptions).forEach((key) => {
@@ -72,15 +86,15 @@ class Loader {
         return url.slice(0, -1);
     }
 
-    load(method: HttpMethod, endpoint: string, callback: CallbackFunction, options: Options = {}): void {
+    load(method: HttpMethod, endpoint: string, callback: CallbackFunction, options: OptionsObj = {}): void {
         fetch(this.makeUrl(options, endpoint), { method })
             .then(this.errorHandler)
             .then((res) => res.json())
-            .then((data) => {
+            .then((data: ResponseData) => {
                 callback(data);
                 FilterNews.setSources(data);
             })
-            .catch((err) => console.error(err));
+            .catch((err: Error) => console.error(err));
     }
 }
 
