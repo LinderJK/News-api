@@ -1,0 +1,24 @@
+#filterInput {
+  font-size: 1rem;
+  font-family: inherit;
+  padding: 0.25em 0.5em;
+  background-color: #fff;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  height: 30px;
+
+}
+
+#filterInput:focus {
+  border-color: #3fcc59;
+  box-shadow: 0 1em 1em -0.6em #3fcc59;
+  outline: 3px solid transparent;
+}
+
+/*small*/
+@media (max-width: 576px) {
+  #filterInput {
+    width: 100%;
+  }
+
+}
