@@ -1,8 +1,16 @@
 import AppController from '../controller/controller';
 import { AppView } from '../view/appView';
 import FilterNews from '../filter/filter';
+import { ResponseData } from '../controller/loader';
 
-class App {
+interface AppInterface {
+    controller: AppController;
+    view: AppView;
+
+    start(): void;
+}
+
+class App implements AppInterface {
     public controller: AppController;
     public view: AppView;
 
@@ -12,13 +20,13 @@ class App {
     }
 
     start(): void {
-        const sourcesElement = document.querySelector('.sources') as Element;
+        const sourcesElement: HTMLElement | null = document.querySelector('.sources') as HTMLElement;
         if (sourcesElement) {
             sourcesElement.addEventListener('click', (e: Event) =>
-                this.controller.getNews(e, (data) => this.view.drawNews(data))
+                this.controller.getNews(e, (data: ResponseData) => this.view.drawNews(data))
             );
         }
-        this.controller.getSources((data) => this.view.drawSources(data));
+        this.controller.getSources((data: ResponseData) => this.view.drawSources(data));
         FilterNews.init();
     }
 }
