@@ -4,7 +4,6 @@ import '../filter/filter.css';
 import { ResponseData } from '../controller/loader';
 
 class FilterNews {
-    // private static sources: SourcesArray = [];
     private static originalSources: SourcesArray;
 
     public static setSources(data: ResponseData): void {
