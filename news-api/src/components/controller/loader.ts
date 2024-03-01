@@ -6,10 +6,10 @@ interface Options {
     [key: string]: string;
 }
 
-interface ResponseData {
+export interface ResponseData {
     articles?: ArticlesArray;
     sources?: SourcesArray;
-    status?: RequestStatus;
+    status: RequestStatus;
     totalResults?: number;
 }
 
@@ -78,7 +78,7 @@ class Loader {
             .then((res) => res.json())
             .then((data) => {
                 callback(data);
-                FilterNews.setSources(data.sources);
+                FilterNews.setSources(data);
             })
             .catch((err) => console.error(err));
     }
