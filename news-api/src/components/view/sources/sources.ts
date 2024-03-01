@@ -10,9 +10,13 @@ export interface Source {
     country: string;
 }
 
+interface SourcesInterface {
+    draw(data: SourcesArray): void;
+}
+
 export type SourcesArray = Array<Source>;
 
-class Sources {
+class Sources implements SourcesInterface {
     draw(data: SourcesArray): void {
         const fragment: DocumentFragment = document.createDocumentFragment();
         const sourceItemTemp: HTMLTemplateElement | null = document.querySelector('#sourceItemTemp');

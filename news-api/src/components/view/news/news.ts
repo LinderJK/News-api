@@ -14,9 +14,13 @@ export interface Article {
     content: string;
 }
 
+interface NewsInterface {
+    draw(data: ArticlesArray): void;
+}
+
 export type ArticlesArray = Array<Article>;
 
-class News {
+class News implements NewsInterface {
     draw(data: ArticlesArray): void {
         const news: ArticlesArray = data.length >= 10 ? data.filter((_item, idx) => idx < 10) : data;
 
