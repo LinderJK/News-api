@@ -1,5 +1,6 @@
 import { ArticlesArray } from '../view/news/news';
 import { SourcesArray } from '../view/sources/sources';
+import FilterNews from '../filter/filter';
 
 interface Options {
     [key: string]: string;
@@ -8,8 +9,8 @@ interface Options {
 interface ResponseData {
     articles?: ArticlesArray;
     sources?: SourcesArray;
-    status: RequestStatus;
-    totalResults: number;
+    status?: RequestStatus;
+    totalResults?: number;
 }
 
 enum RequestStatus {
@@ -75,7 +76,10 @@ class Loader {
         fetch(this.makeUrl(options, endpoint), { method })
             .then(this.errorHandler)
             .then((res) => res.json())
-            .then((data) => callback(data))
+            .then((data) => {
+                callback(data);
+                FilterNews.setSources(data.sources);
+            })
             .catch((err) => console.error(err));
     }
 }

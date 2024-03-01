@@ -1,9 +1,10 @@
 import AppController from '../controller/controller';
 import { AppView } from '../view/appView';
+import FilterNews from '../filter/filter';
 
 class App {
-    private controller: AppController;
-    private view: AppView;
+    public controller: AppController;
+    public view: AppView;
 
     constructor() {
         this.controller = new AppController();
@@ -18,6 +19,7 @@ class App {
             );
         }
         this.controller.getSources((data) => this.view.drawSources(data));
+        FilterNews.init();
     }
 }
 
