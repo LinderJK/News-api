@@ -16,12 +16,12 @@ class Sources {
     draw(data: SourcesArray): void {
         const fragment: DocumentFragment = document.createDocumentFragment();
         const sourceItemTemp: HTMLTemplateElement | null = document.querySelector('#sourceItemTemp');
-        data.forEach((item: Source) => {
+        data.forEach((item: Source): void => {
             if (!sourceItemTemp) {
                 //Какая-то логика
                 return;
             }
-            const sourceClone = sourceItemTemp.content.cloneNode(true) as HTMLElement;
+            const sourceClone: HTMLElement = sourceItemTemp.content.cloneNode(true) as HTMLElement;
 
             (sourceClone.querySelector('.source__item-name') as HTMLElement).textContent = item.name;
             (sourceClone.querySelector('.source__item') as HTMLElement).setAttribute('data-source-id', item.id);
